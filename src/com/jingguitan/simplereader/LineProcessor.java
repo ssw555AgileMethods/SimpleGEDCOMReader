@@ -223,6 +223,11 @@ public class LineProcessor {
 				}
 			}
 			
+			// end of fam
+			if (words.length == 2 && words[0].equals("0") && words[1].equals("TRLR")) {
+				famList.add(currFam);
+			}
+			
 		}
 		
 			//in other cases, do nothing

@@ -14,14 +14,17 @@ public class FileReader {
 		try {
 			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 			String foobarString = null;
-			
+			LineProcessor lp = new LineProcessor();
 			while( (foobarString = reader.readLine()) != null) {
 				// do something
 				foobarString = foobarString.trim();
-				System.out.println("--> "+foobarString);
-				LineProcessor lp = new LineProcessor();
+				//System.out.println("--> "+foobarString);
 				lp.process(foobarString);
+				
+				
 			}
+			GEDCOMPrinter.printIndividual(lp.getIndiList());
+			GEDCOMPrinter.printFamily(lp.getFamList());
 			
 		} catch (Exception e) {
 			e.printStackTrace();

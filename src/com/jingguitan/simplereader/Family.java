@@ -2,6 +2,8 @@ package com.jingguitan.simplereader;
 
 import java.util.ArrayList;
 
+import com.jingguitan.simplereader.Individual.LineNumber;
+
 public class Family implements Comparable{
 	private String id;
 	private String married; // marry time
@@ -11,10 +13,28 @@ public class Family implements Comparable{
 	private String husbandName;
 	private String wifeName;
 	private ArrayList<String> children;
+	LineNumber lineNumber;
+	
+	class LineNumber{
+		int idLineNumber;
+		int marriedLineNumber;
+		int divorcedLineNumber;
+		int husbandIdLineNumber;
+		int wifeIdLineNumber;
+		int husbandNameNumber;
+		int wifeNameLineNumber;
+		ArrayList<Integer> childrenLineNumber;
+		
+		public LineNumber() {
+			childrenLineNumber = new ArrayList<Integer>();
+		}
+	}
 	
 	public Family() {
-		this.setMarried("NA");
-		this.setDivorced("NA");
+		lineNumber = new LineNumber();
+		
+		this.setMarried("NA", -1);
+		this.setDivorced("NA", -1);
 		children = new ArrayList<String>();
 	}
 	
@@ -41,8 +61,9 @@ public class Family implements Comparable{
 		return id;
 	}
 	
-	public void setId(String id) {
+	public void setId(String id, int line) {
 		this.id=id;
+		this.lineNumber.idLineNumber = line;
 	}
 	
 	public String getMarried() {
@@ -58,8 +79,9 @@ public class Family implements Comparable{
 		return date[2]+"-"+date[1]+"-"+GEDCOMDateFomater.formatDay(date[0]);
 	}
 	
-	public void setMarried(String married) {
+	public void setMarried(String married, int line) {
 		this.married = married;
+		this.lineNumber.marriedLineNumber = line;
 	}
 	
 	public String getDivorced() {
@@ -72,16 +94,18 @@ public class Family implements Comparable{
 		return date[2]+"-"+date[1]+"-"+GEDCOMDateFomater.formatDay(date[0]);
 	}
 	
-	public void setDivorced(String divorced) {
+	public void setDivorced(String divorced, int line) {
 		this.divorced = divorced;
+		this.lineNumber.divorcedLineNumber = line;
 	}
 	
 	public String getHusbandId() {
 		return husbandId;
 	}
 	
-	public void setHusbandId(String husbandId) {
+	public void setHusbandId(String husbandId, int line) {
 		this.husbandId = husbandId;
+		this.lineNumber.husbandIdLineNumber = line;
 	}
 	
 	
@@ -89,24 +113,27 @@ public class Family implements Comparable{
 		return husbandName;
 	}
 	
-	public void setHusbandName(String husbandName) {
+	public void setHusbandName(String husbandName, int line) {
 		this.husbandName = husbandName;
+		this.lineNumber.husbandNameNumber = line;
 	}
 	
 	public String getWifeId() {
 		return wifeId;
 	}
 	
-	public void setWifeId(String wifeId) {
+	public void setWifeId(String wifeId, int line) {
 		this.wifeId = wifeId;
+		this.lineNumber.wifeIdLineNumber = line;
 	}
 	
 	public String getWifeName() {
 		return wifeName;
 	}
 
-	public void setWifeName(String wifeName) {
+	public void setWifeName(String wifeName, int line) {
 		this.wifeName = wifeName;
+		this.lineNumber.wifeNameLineNumber = line;
 	}
 	public String getChildren() {
 		String temp = "";
@@ -124,8 +151,9 @@ public class Family implements Comparable{
 		return "{"+temp+"}";
 	}
 	
-	public void addChildren(String childId) {
-		children.add(childId);
+	public void addChildren(String childId, int line) {
+		this.children.add(childId);
+		this.lineNumber.childrenLineNumber.add(line);
 	}
 
 	@Override

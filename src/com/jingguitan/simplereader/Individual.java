@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 public class Individual implements Comparable {
-	private String firstName;
-	private String lastName;
 	
 	private String id;
 	private String name;
@@ -16,11 +14,30 @@ public class Individual implements Comparable {
 	private String deathday;
 	private String child;
 	private ArrayList<String> spouse; // fam id
+	LineNumber lineNumber;
+	
+	class LineNumber{
+		int idLineNumber;
+		int nameLineNumber;
+		int genderLineNumber;
+		int birthdayLineNumber;
+		int ageLineNumber;
+		int aliveLineNumber;
+		int deathdayLineNumber;
+		int childLineNumber;
+		ArrayList<Integer> spouseLineNumber;
+		
+		public LineNumber() {
+			spouseLineNumber = new ArrayList<Integer>();
+		}
+	}
 	
 	public Individual() {
-		this.setAlive(true);
-		this.setChild("NA");
-		this.setBirthday("NA");
+		lineNumber = new LineNumber();
+		
+		this.setAlive(true, -1);
+		this.setChild("NA", -1);
+		this.setBirthday("NA", -1);
 		spouse = new ArrayList<String>();
 	}
 	
@@ -47,16 +64,18 @@ public class Individual implements Comparable {
 		return id;
 	}
 	
-	public void setId(String id) {
+	public void setId(String id, int line) {
 		this.id = id;
+		this.lineNumber.idLineNumber = line;
 	}
 	
 	public String getName() {
 		return name;
 	}
 	
-	public void setName(String name) {
+	public void setName(String name, int line) {
 		this.name = name;
+		this.lineNumber.nameLineNumber = line;
 	}
 	
 	// not needed
@@ -75,8 +94,9 @@ public class Individual implements Comparable {
 		return gender;
 	}
 	
-	public void setGender(String gender) {
+	public void setGender(String gender, int line) {
 		this.gender = gender;
+		this.lineNumber.genderLineNumber = line;
 	}
 	
 	public String getBirthday() {
@@ -93,8 +113,9 @@ public class Individual implements Comparable {
 		return date[2]+"-"+date[1]+"-"+GEDCOMDateFomater.formatDay(date[0]);
 	}
 	
-	public void setBirthday(String birthday) {
+	public void setBirthday(String birthday, int line) {
 		this.birthday = birthday;
+		this.lineNumber.birthdayLineNumber = line;
 	}
 	
 	
@@ -157,8 +178,9 @@ public class Individual implements Comparable {
 		return alive?"True":"Flase";
 	}
 	
-	public void setAlive(boolean alive) {
+	public void setAlive(boolean alive, int line) {
 		this.alive = alive;
+		this.lineNumber.aliveLineNumber = line;
 	}
 	
 	public String getDeathday() {
@@ -173,8 +195,9 @@ public class Individual implements Comparable {
 		return date[2]+"-"+date[1]+"-"+GEDCOMDateFomater.formatDay(date[0]);
 	}
 	
-	public void setDeathday(String deathday) {
+	public void setDeathday(String deathday, int line) {
 		this.deathday = deathday;
+		this.lineNumber.deathdayLineNumber = line;
 	}
 	
 	public String getChild() {
@@ -186,8 +209,9 @@ public class Individual implements Comparable {
 		}
 	}
 	
-	public void setChild(String child) {
+	public void setChild(String child, int line) {
 		this.child = child;
+		this.lineNumber.childLineNumber = line;
 	}
 	
 	public String getSpouse() {
@@ -207,8 +231,9 @@ public class Individual implements Comparable {
 		return "{"+temp+"}";
 	}
 	
-	public void addSpouse(String spouse) {
+	public void addSpouse(String spouse, int line) {
 		this.spouse.add(spouse);
+		this.lineNumber.spouseLineNumber.add(line);
 	}
 
 	@Override

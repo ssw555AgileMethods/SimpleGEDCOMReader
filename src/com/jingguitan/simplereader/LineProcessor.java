@@ -5,6 +5,14 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * 
+ * all information of Individual and Family are stored in {@value indiList} and {@value famList},
+ * use {@code getIndiList} and {@code getFamList} to get these information.
+ * 
+ * @author Jinggui Tan
+ */
+
 public class LineProcessor {
 	private boolean indiEntry;
 	private boolean famEntry;
@@ -15,7 +23,9 @@ public class LineProcessor {
 	private boolean marrEntry;
 	private boolean divEntry;
 	
+	// store individual info
 	private ArrayList<Individual> indiList;
+	// store fam info
 	private ArrayList<Family> famList;
 	
 	
@@ -38,7 +48,7 @@ public class LineProcessor {
 		divEntry = false;
 	}
 	
-	public void process(String line) {
+	public void process(String line, int lineNumber) {
 		String[] words = line.split(" ", 3);
 		
 // for 1st assigment		
@@ -93,7 +103,7 @@ public class LineProcessor {
 				
 				currIndi = new Individual();
 				//id
-				currIndi.setId(words[1].trim());
+				currIndi.setId(words[1].trim(), lineNumber);
 
 			}
 		}
@@ -108,20 +118,21 @@ public class LineProcessor {
 				
 				currFam = new Family();
 				// id
-				currFam.setId(words[1]);
+				currFam.setId(words[1], lineNumber);
 			}
 		}
 		
+		//read and import data into memory
 		// for individual
 		if(indiEntry == true && famEntry == false) {
 			// name
 			if (words.length == 3 && words[0].equals("1") && words[1].equals("NAME")) {
-				currIndi.setName(words[2].trim());
+				currIndi.setName(words[2].trim(), lineNumber);
 			}
 			
 			// Gender
 			if (words.length == 3 && words[0].equals("1") && words[1].equals("SEX")) {
-				currIndi.setGender(words[2].trim());
+				currIndi.setGender(words[2].trim(), lineNumber);
 			}
 			
 			// Birthday
@@ -129,28 +140,28 @@ public class LineProcessor {
 				birtEntry = true;
 			}
 			if (words.length == 3 && birtEntry == true &&  words[0].equals("2") && words[1].equals("DATE")) {
-				currIndi.setBirthday(words[2]);
+				currIndi.setBirthday(words[2], lineNumber);
 				birtEntry = false;
 			}
 			
 			// Alive
 			if (words.length == 2 && words[0].equals("1") && words[1].equals("DEAT")) {
 				deatEntry = true;
-				currIndi.setAlive(false);
+				currIndi.setAlive(false, lineNumber);
 			}
 			if (words.length == 3 && deatEntry == true &&  words[0].equals("2") && words[1].equals("DATE")) {
-				currIndi.setDeathday(words[2]);
+				currIndi.setDeathday(words[2], lineNumber);
 				deatEntry = false;
 			}
 			
 			// ifChild
 			if (words.length == 3 &&  words[0].equals("1") && words[1].equals("FAMC")) {
-				currIndi.setChild(words[2]);
+				currIndi.setChild(words[2], lineNumber);
 			}
 			
 			// ifSpouse
 			if (words.length == 3 &&  words[0].equals("1") && words[1].equals("FAMS")) {
-				currIndi.addSpouse(words[2]);
+				currIndi.addSpouse(words[2], lineNumber);
 			}
 			
 			// detect next indi or fam
@@ -159,7 +170,7 @@ public class LineProcessor {
 					indiList.add(currIndi);
 					currIndi = new Individual();
 					// id
-					currIndi.setId(words[1]);
+					currIndi.setId(words[1], lineNumber);
 				}
 				
 			}
@@ -175,7 +186,7 @@ public class LineProcessor {
 				marrEntry = true;
 			}
 			if (words.length == 3 && marrEntry == true && words[0].equals("2") && words[1].equals("DATE")) {
-				currFam.setMarried(words[2]);
+				currFam.setMarried(words[2], lineNumber);
 				marrEntry = false;
 			}
 			
@@ -184,32 +195,32 @@ public class LineProcessor {
 				divEntry = true;
 			}
 			if (words.length == 3 && divEntry == true && words[0].equals("2") && words[1].equals("DATE")) {
-				currFam.setDivorced(words[2]);
+				currFam.setDivorced(words[2], lineNumber);
 				divEntry = false;
 			}
 			
 			// hunsband id and name
 			if (words.length == 3 && words[0].equals("1") && words[1].equals("HUSB")) {
-				currFam.setHusbandId(words[2]);
-				currFam.setHusbandName(getNameById(words[2]));
+				currFam.setHusbandId(words[2], lineNumber);
+				currFam.setHusbandName(getNameById(words[2]), lineNumber);
 			}
 			
 			// wife id and name
 			if (words.length == 3 && words[0].equals("1") && words[1].equals("WIFE")) {
-				currFam.setWifeId(words[2]);
-				currFam.setWifeName(getNameById(words[2]));
+				currFam.setWifeId(words[2], lineNumber);
+				currFam.setWifeName(getNameById(words[2]), lineNumber);
 			}
 			
 			// add children
 			if (words.length == 3 && words[0].equals("1") && words[1].equals("CHIL")) {
-				currFam.addChildren(words[2]);
+				currFam.addChildren(words[2], lineNumber);
 			}
 			
 			// detect next indi or fam
 			if (words.length == 3 && words[0].equals("0") && words[2].equals("INDI")) {
 				famList.add(currFam);
 				currIndi = new Individual();
-				currIndi.setId(words[1]);
+				currIndi.setId(words[1], lineNumber);
 				
 				indiEntry = true;
 				famEntry = false;
@@ -219,7 +230,7 @@ public class LineProcessor {
 					famList.add(currFam);
 					currFam = new Family();
 					// id
-					currFam.setId(words[1]);
+					currFam.setId(words[1], lineNumber);
 				}
 			}
 			
@@ -246,13 +257,9 @@ public class LineProcessor {
 			}else {
 				return true;
 			}
-			
-			
 		}else if(tag2.equals( "INDI") || tag2.equals("FAM")) {
 			return true;
 		}
-		
-		
 		return false;
 		
 	}

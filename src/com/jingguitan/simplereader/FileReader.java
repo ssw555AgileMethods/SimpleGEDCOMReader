@@ -12,17 +12,24 @@ public class FileReader {
 		BufferedReader reader = null;
 		
 		try {
+			
 			reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
 			String foobarString = null;
+			
+			// read file by line
 			LineProcessor lp = new LineProcessor();
+			int lineNumber = 0;
+			
 			while( (foobarString = reader.readLine()) != null) {
 				// do something
+				lineNumber++;
 				foobarString = foobarString.trim();
 				//System.out.println("--> "+foobarString);
-				lp.process(foobarString);
-				
-				
+				lp.process(foobarString, lineNumber);
 			}
+			
+			
+			
 			GEDCOMPrinter.printIndividual(lp.getIndiList());
 			GEDCOMPrinter.printFamily(lp.getFamList());
 			

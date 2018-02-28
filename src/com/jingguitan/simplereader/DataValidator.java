@@ -1,5 +1,7 @@
 package com.jingguitan.simplereader;
 
+import java.util.ArrayList;
+
 /**
  * This class is used to validate data of Individual and Family.
  * Each method realize one of more User Stories.
@@ -10,26 +12,54 @@ package com.jingguitan.simplereader;
 
 public class DataValidator {
 	
+	//add your each validator into this method and add system log to print
+	
+	//for individuals
+	public static void validateIndividualsInfo(ArrayList<Individual> indiArray) {
+		for(Individual indi: indiArray) {
+			//US03
+			if (birtBeforeDeat(indi) == false) {
+				System.err.println("Err:Line "+indi.lineNumber.birthdayLineNumber
+				+ ": Birth after death.");
+				System.err.println("Birth:"+indi.getBirthday()+"/Death:"+indi.getDeathday());
+			}
+		}
+	}
+	
+	// for families
+	public static void validateFamiliesInfo(ArrayList<Family> famArray) {
+		for(Family fam: famArray) {
+			//US04
+			if (marryBeforeDivo(fam) == false) {
+				System.err.println("Err:Line "+fam.lineNumber.marriedLineNumber
+				+ ": Marry after death.");
+				System.err.println("Marry:"+fam.getMarried()+"/Divorce:"+fam.getDivorced());
+			}
+		}
+	}
+	
+	// below are data validators
+	
 	// US03 Birth before death
-	public boolean birtBeforeDeat(Individual indi) {
+	public static boolean birtBeforeDeat(Individual indi) {
 		//may not die
 		if(indi.getAlive().equals("True")) {
 			return true;
 		}
-		return this.compareDate(indi.getBirthday(), indi.getDeathday());
+		return compareDate(indi.getBirthday(), indi.getDeathday());
 	}
 	
 	// US04 Marriage before divorce
-	public boolean birtBeforeDivo(Family fam) {
+	public static boolean marryBeforeDivo(Family fam) {
 		
 		//may not divorce
 		if(fam.getDivorced().equals("NA")) {
 			return true;
 		}
-		return this.compareDate(fam.getMarried(), fam.getDivorced());
+		return compareDate(fam.getMarried(), fam.getDivorced());
 	}
 	
-	private boolean compareDate(String date1, String date2) {
+	private static boolean compareDate(String date1, String date2) {
 		int year1 = Integer.parseInt(date1.substring(0, 4));
 		int month1 = Integer.parseInt(date1.substring(5, 7));
 		int day1 = Integer.parseInt(date1.substring(9));

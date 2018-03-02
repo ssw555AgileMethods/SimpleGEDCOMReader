@@ -28,7 +28,8 @@ public class FileReader {
 				lp.process(foobarString, lineNumber);
 			}
 			
-			
+			DataValidator.validateIndividualsInfo(lp.getIndiList());
+			DataValidator.validateFamiliesInfo(lp.getFamList());
 			
 			GEDCOMPrinter.printIndividual(lp.getIndiList());
 			GEDCOMPrinter.printFamily(lp.getFamList());

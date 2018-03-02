@@ -122,7 +122,7 @@ public class Individual implements Comparable {
 	public String getAge() {
 		// 2 cases
 		// 1. For dead, deathday - birthday
-		// 2¡£  For alive, currentTime - birthday
+		// 2ï¿½ï¿½  For alive, currentTime - birthday
 		if(this.birthday.equals("NA")) {
 			return this.birthday;
 		}

@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * This class is used to validate data of Individual and Family.
  * Each method realize one of more User Stories.
  * 
- * @author Administrator
+ * @author Jinggui
  *
  */
 

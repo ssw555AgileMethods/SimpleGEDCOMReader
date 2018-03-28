@@ -33,8 +33,9 @@ public class FileReader {
 			DataValidation.dateShouldBeforeIndi(lp.getIndiList());
 			DataValidation.dateShouldBeforeFam(lp.getFamList());
 			
-			GEDCOMPrinter.printIndividual(lp.getIndiList());
-			GEDCOMPrinter.printFamily(lp.getFamList());
+			GEDCOMPrinter printer = new GEDCOMPrinter();
+			printer.printIndividual(lp.getIndiList());
+			printer.printFamily(lp.getFamList());
 			
 		} catch (Exception e) {
 			e.printStackTrace();

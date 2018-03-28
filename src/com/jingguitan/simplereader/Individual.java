@@ -110,7 +110,7 @@ public class Individual implements Comparable {
 		String[] date = this.birthday.split(" ",3);
 		date[1] = GEDCOMDateFomater.format(date[1]);
 		
-		return date[2]+"-"+date[1]+"-"+GEDCOMDateFomater.formatDay(date[0]);
+		return date[2]+"-"+date[1]+"-"+GEDCOMDateFomater.formatMonthDay(date[0]);
 	}
 	
 	public void setBirthday(String birthday, int line) {
@@ -174,8 +174,8 @@ public class Individual implements Comparable {
 	}
 	
 	
-	public String getAlive() {
-		return alive?"True":"Flase";
+	public Boolean getAlive() {
+		return alive?true:false;
 	}
 	
 	public void setAlive(boolean alive, int line) {
@@ -192,7 +192,7 @@ public class Individual implements Comparable {
 		String[] date = this.deathday.split(" ",3);
 		date[1] = GEDCOMDateFomater.format(date[1]);
 		
-		return date[2]+"-"+date[1]+"-"+GEDCOMDateFomater.formatDay(date[0]);
+		return date[2]+"-"+date[1]+"-"+GEDCOMDateFomater.formatMonthDay(date[0]);
 	}
 	
 	public void setDeathday(String deathday, int line) {

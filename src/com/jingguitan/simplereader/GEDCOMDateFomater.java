@@ -43,7 +43,7 @@ public class GEDCOMDateFomater {
 		}
 	}
 	
-	public static String formatDay(String day) {
-		return (day.toCharArray().length == 1)? "0"+day: day;
+	public static String formatMonthDay(String number) {
+		return (number.toCharArray().length == 1)? "0"+number: number;
 	}
 }

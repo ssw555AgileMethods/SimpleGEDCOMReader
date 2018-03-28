@@ -24,9 +24,9 @@ public class LineProcessor {
 	private boolean divEntry;
 	
 	// store individual info
-	private ArrayList<Individual> indiList;
+	private static ArrayList<Individual> indiList;
 	// store fam info
-	private ArrayList<Family> famList;
+	private static ArrayList<Family> famList;
 	
 	
 	private Individual currIndi;
@@ -280,13 +280,22 @@ public class LineProcessor {
 		
 	}
 	
-	private String getNameById(String id) {
+	public static String getNameById(String id) {
 		for (Individual indi: indiList) {
 			if(indi.getId().equals(id)) {
 				return indi.getName();
 			}
 		}
 		return "NA";
+	}
+	
+	public static Individual getIndiById(String id) {
+		for (Individual indi: indiList) {
+			if(indi.getId().equals(id)) {
+				return indi;
+			}
+		}
+		return null;
 	}
 	
 	public ArrayList<Individual> getIndiList(){

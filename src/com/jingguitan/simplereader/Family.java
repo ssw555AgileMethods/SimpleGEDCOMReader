@@ -76,7 +76,7 @@ public class Family implements Comparable{
 		
 		date[1] = GEDCOMDateFomater.format(date[1]);
 		
-		return date[2]+"-"+date[1]+"-"+GEDCOMDateFomater.formatDay(date[0]);
+		return date[2]+"-"+date[1]+"-"+GEDCOMDateFomater.formatMonthDay(date[0]);
 	}
 	
 	public void setMarried(String married, int line) {
@@ -91,7 +91,7 @@ public class Family implements Comparable{
 		String[] date = this.divorced.split(" ",3);
 		date[1] = GEDCOMDateFomater.format(date[1]);
 		
-		return date[2]+"-"+date[1]+"-"+GEDCOMDateFomater.formatDay(date[0]);
+		return date[2]+"-"+date[1]+"-"+GEDCOMDateFomater.formatMonthDay(date[0]);
 	}
 	
 	public void setDivorced(String divorced, int line) {
@@ -154,6 +154,18 @@ public class Family implements Comparable{
 	public void addChildren(String childId, int line) {
 		this.children.add(childId);
 		this.lineNumber.childrenLineNumber.add(line);
+	}
+	
+	public ArrayList<String> getChildrenId() {
+		ArrayList<String> temp = new ArrayList<String>();
+		if(this.children.size() == 0) {
+			return null;
+		}else {
+			for (String id:children) {
+				temp.add(id);
+			}
+			return temp;
+		}
 	}
 
 	@Override

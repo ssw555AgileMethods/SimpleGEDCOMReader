@@ -159,7 +159,11 @@ public class GEDCOMPrinter {
 				}else if(j==4) {
 					content = indi.getAge();
 				}else if(j==5) {
-					content = indi.getAlive();
+					if(indi.getAlive())	{
+						content = "True";
+					}else {
+						content = "False";
+					}
 				}else if(j==6) {
 					content = indi.getDeathday();
 				}else if(j==7) {

@@ -18,7 +18,7 @@ public class DataValidation {
 		//checking birth day is not after the current date
 		for (Individual indi: arrayList) {
 			Date date2 = sdf.parse(indi.getBirthday());//dates of individual birthdays
-			if(indi.getAlive()!="True"){
+			if(indi.getAlive()!=true){
 				Date date3 = sdf.parse(indi.getDeathday());//dates of individual deathdays
 				dateChecker(date1,date3);
 			}

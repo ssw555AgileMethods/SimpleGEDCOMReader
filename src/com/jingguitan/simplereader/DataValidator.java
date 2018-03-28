@@ -49,7 +49,7 @@ public class DataValidator {
 				System.err.println("Err:Line "+LineProcessor.getIndiById(fam.getHusbandId()) 
 						+ "or " + LineProcessor.getIndiById(fam.getWifeId()) + "\r\n"
 						+ "FamId: " + fam.getId() + "\r\n"
-						+ "Reason: Child should be born before death of mother and before 9 months after death of father. \\r\\n");
+						+ "Children: Child should be born before death of mother and before 9 months after death of father. \r\n");
 				
 			}
 			

@@ -5,6 +5,6 @@ public class App {
 		
 		// application initial and start
 		FileReader fd = new FileReader();
-		fd.readFrom("wrongMarry.ged");
+		fd.readFrom("acceptence.ged");
 	}
 }

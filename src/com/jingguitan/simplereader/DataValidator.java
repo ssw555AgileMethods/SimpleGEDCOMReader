@@ -1,6 +1,7 @@
 package com.jingguitan.simplereader;
 
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 /**
  * This class is used to validate data of Individual and Family.
@@ -22,6 +23,7 @@ public class DataValidator {
 				System.err.println("Err:Line "+indi.lineNumber.birthdayLineNumber
 				+ ": Birth after death.");
 				System.err.println("Birth:"+indi.getBirthday()+"/Death:"+indi.getDeathday());
+				System.err.println();
 			}
 		}
 	}
@@ -34,6 +36,7 @@ public class DataValidator {
 				System.err.println("Err:Line "+fam.lineNumber.marriedLineNumber
 				+ ": Marry should be before divorce.");
 				System.err.println("Marry:"+fam.getMarried()+"/Divorce:"+fam.getDivorced());
+				System.err.println();
 			}
 			
 			// US08
@@ -41,7 +44,8 @@ public class DataValidator {
 				System.err.println("Err:Line "+fam.lineNumber.marriedLineNumber 
 				+ "\r\n"
 				+ "FamId: " + fam.getId() + "\r\n"
-				+ "Reason: Children should be born after marriage of parents (and not more than 9 months after their divorce)");
+				+ "Reason: Children should be born after marriage of parents (and not more than 9 months after their divorce).");
+				System.err.println();
 			}
 			
 			// US09
@@ -49,10 +53,28 @@ public class DataValidator {
 				System.err.println("Err:Line "+LineProcessor.getIndiById(fam.getHusbandId()) 
 						+ "or " + LineProcessor.getIndiById(fam.getWifeId()) + "\r\n"
 						+ "FamId: " + fam.getId() + "\r\n"
-						+ "Children: Child should be born before death of mother and before 9 months after death of father. \r\n");
+						+ "Children: Child should be born before death of mother and before 9 months after death of father.");
+				System.err.println();
 				
 			}
 			
+			// US24
+			if (uniqueFamily(fam) == false) {
+				System.err.println("Err:Line "+fam.lineNumber.marriedLineNumber 
+						+ "\r\n"
+						+ "FamId: " + fam.getId() + "\r\n"
+						+ "Reason: No more than one family with the same spouses by name and the same marriage date should appear in a GEDCOM file.");
+				System.err.println();
+			}
+			
+			// US25
+			if (uniqueFirstName(fam) == false) {
+				System.err.println("Err:Line "+fam.lineNumber.childrenLineNumber.get(0) 
+						+ "\r\n"
+						+ "FamId: " + fam.getId() + "\r\n"
+						+ "Reason: No more than one child with the same name and birth date should appear in a family.");
+				System.err.println();
+			}
 		}
 	}
 	
@@ -133,6 +155,60 @@ public class DataValidator {
 		}
 		return result;
 	}
+	
+	
+	static Hashtable<String, ArrayList<String>> mDateNames = null;
+	// US24 Unique families by spouses
+	public static boolean uniqueFamily(Family fam) {
+		if(mDateNames == null) {
+			mDateNames = new Hashtable<String, ArrayList<String>>();
+		}
+		String marriageDate = fam.getMarried();
+		String husName = fam.getHusbandName();
+		String wifeName = fam.getWifeName();
+		String names = husName+wifeName;
+		if(mDateNames.containsKey(names)) {
+			ArrayList<String> foobar = mDateNames.get(names);
+			for(String s:foobar) {
+				if(s.equals(marriageDate)) {
+					return false;
+				}
+			}
+			foobar.add(marriageDate);
+			mDateNames.replace(names, foobar);
+			return true;
+		}else {
+			ArrayList<String> foobar = new ArrayList<String>();
+			foobar.add(names);
+			mDateNames.put(marriageDate, foobar);
+			return true;
+		}
+	}
+	
+	static Hashtable<String, String> childNameBirday = null;
+	// US25 Unique first names in families
+	public static boolean uniqueFirstName(Family fam) {
+		if(childNameBirday == null) {
+			childNameBirday = new Hashtable<String, String>();
+		}
+		ArrayList<String> childIds = fam.getChildrenId();
+		if(childIds == null) return true;
+		for(String s:childIds) {
+			String birDate = LineProcessor.getIndiById(s).getBirthday();
+			String name = LineProcessor.getIndiById(s).getName();
+			
+			if(childNameBirday.containsKey(name)) {
+				String compBirDate = childNameBirday.get(name);
+				if(compBirDate.equals(birDate)) {
+					return false;
+				}
+			}
+			childNameBirday.put(name, birDate);
+		}
+		
+		return true;
+	}
+	
 
 	/*
 	 * return true if date1 < date2

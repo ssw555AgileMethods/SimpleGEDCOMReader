@@ -130,6 +130,46 @@ public class DataValidation {
 		}
 }
 
+	public static void uniqueDataCheck(ArrayList<Individual> arrayList1, ArrayList<Family> arrayList2) throws ParseException
+	{
+		Collections.sort(arrayList1);
+		Collections.sort(arrayList2);
+		//user story 22
+		for(int i=0;i<arrayList1.size();i++){
+			for(int j=0;j<arrayList1.size();j++){
+				if(i!=j){
+					if(arrayList1.get(i).getId().equals(arrayList1.get(j).getId())){
+						System.out.println("duplicate"+arrayList1.get(i).getId());
+					}
+				}
+			}
+		}
+	
+		for(int i=0;i<arrayList2.size();i++){
+			for(int j=0;j<arrayList2.size();j++){
+				if(i!=j){
+					if(arrayList2.get(i).getId().equals(arrayList2.get(j).getId())){
+						System.out.println("duplicate"+arrayList2.get(i).getId());
+					}
+				}
+			}
+		}//end of us22
+		
+		//User story 23
+		for(int i=0;i<arrayList1.size();i++){
+			for(int j=0;j<arrayList1.size();j++){
+				if(i!=j){
+					if(arrayList1.get(i).getName().equals(arrayList1.get(j).getName())){
+						if(arrayList1.get(i).getBirthday().equals(arrayList1.get(j).getBirthday())){
+							System.out.println("Duplicate:"+arrayList1.get(i).getName());
+						}
+					}
+				}
+			}
+		}		
+		//End of us23
+	}
+	
 	public static Boolean dateChecker(Date date1, Date date2) {
 		
 		if (date1.compareTo(date2) <= 0) {

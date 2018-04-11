@@ -35,6 +35,7 @@ public class FileReader {
 			DataValidation.birthBeforeMarriage(lp.getIndiList(),lp.getFamList());
 			DataValidation.divorceBeforeDeath(lp.getIndiList(),lp.getFamList());
 			DataValidation.noBigamy(lp.getFamList());
+			DataValidation.uniqueDataCheck(lp.getIndiList(),lp.getFamList());
 			
 			GEDCOMPrinter printer = new GEDCOMPrinter();
 			printer.printIndividual(lp.getIndiList());

@@ -119,12 +119,12 @@ public class Individual implements Comparable {
 	}
 	
 	
-	public String getAge() {
+	public int getAge() {
 		// 2 cases
 		// 1. For dead, deathday - birthday
 		// 2��  For alive, currentTime - birthday
 		if(this.birthday.equals("NA")) {
-			return this.birthday;
+			return -1;
 		}
 		
 		int lastYear = 0;
@@ -165,7 +165,7 @@ public class Individual implements Comparable {
             }  
         }  
 		
-		return Integer.toString(age);
+		return age;
 	}
 	
 	@Deprecated

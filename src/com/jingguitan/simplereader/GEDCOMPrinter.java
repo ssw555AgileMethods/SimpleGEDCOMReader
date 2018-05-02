@@ -157,7 +157,7 @@ public class GEDCOMPrinter {
 				}else if(j==3) {
 					content = indi.getBirthday();
 				}else if(j==4) {
-					content = indi.getAge();
+					content = Integer.toString(indi.getAge());
 				}else if(j==5) {
 					if(indi.getAlive())	{
 						content = "True";
@@ -222,4 +222,73 @@ public class GEDCOMPrinter {
 		printFamContent(arrayList);
 		printRowLine(1);
 	}
+	
+	public void printLivingSingle(ArrayList<Individual> indiList, ArrayList<Family> famList)throws Exception {
+		ArrayList<Individual> result = new ArrayList<Individual>();
+		boolean showFlag = false;
+		for(int i=0; i<indiList.size(); i++) {
+			Individual indi = indiList.get(i);
+			for(int j=0; j<famList.size(); j++) {
+				Family fam = famList.get(j);
+				if(fam.getHusbandId().equals(indi.getId()) || fam.getWifeId().equals(indi.getId())) {
+					showFlag = true;
+					break;
+				}
+			}
+			if(!showFlag) {
+				result.add(indi);
+			}
+			showFlag = false;
+		}
+		
+		System.out.println("Living Single");
+		printSheetHead(0);
+		printIndiContent(result);
+		printRowLine(0);
+	}
+	
+	public void printMultipleBirth(ArrayList<Individual> indiList, ArrayList<Family> famList)throws Exception{
+		ArrayList<ArrayList<Individual>> result = new ArrayList<ArrayList<Individual>>();
+		for(int i=0; i<famList.size(); i++) {
+			ArrayList<Individual> temp = new ArrayList<Individual>();
+			ArrayList<Individual> foobar = null;
+			Family fam = famList.get(i);
+			if(fam.getChildrenId() == null) continue;
+			for(String id:fam.getChildrenId()) {
+				Individual indi = LineProcessor.getIndiById(id);
+				if(temp.contains(indi)) continue;
+				temp.add(indi);
+			}
+			while(temp.size()>0) {
+				foobar = new ArrayList<Individual>();
+				Individual indi = temp.get(0);
+				for(int j=0; j<temp.size();j++) {
+					if(j == 0) continue;
+					Individual indiComp = temp.get(j);
+					if(indi.getId().equals(indiComp.getId())) continue;
+					if(indi.getBirthday().equals(indiComp.getBirthday())) {
+						if(foobar.size() == 0) {
+							foobar.add(indi);
+						}
+						foobar.add(indiComp);
+						temp.remove(j);
+						j--;
+					}
+					
+				}
+				temp.remove(0);
+				if(foobar.size()>0) result.add(foobar);
+			}
+		}
+		
+		if(result == null) return;
+		for(int i=0; i<result.size();i++) {
+			System.out.println("Multiple Births");
+			printSheetHead(0);
+			printIndiContent(result.get(i));
+			printRowLine(0);
+		}
+	}
+	
+	
 }

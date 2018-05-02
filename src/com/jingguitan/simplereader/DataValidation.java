@@ -86,7 +86,7 @@ public class DataValidation {
 		{
 			for (Family fam:arrayList2)
 			{
-					if(fam.getDivorced()!="NA" && indi.getDeathday()!="NA"&&indi.getAlive()!="True")
+					if(fam.getDivorced()!="NA" && indi.getDeathday()!="NA"&&indi.getAlive()!=true)
 					{
 						
 						if(fam.getId()==indi.getSpouse()){

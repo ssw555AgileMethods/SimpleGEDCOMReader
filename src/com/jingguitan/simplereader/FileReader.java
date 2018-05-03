@@ -41,6 +41,7 @@ public class FileReader {
 			GEDCOMPrinter printer = new GEDCOMPrinter();
 			printer.printIndividual(lp.getIndiList());
 			printer.printFamily(lp.getFamList());
+			printer.printLivingSingle(lp.getIndiList(), lp.getFamList());
 			
 		} catch (Exception e) {
 			e.printStackTrace();

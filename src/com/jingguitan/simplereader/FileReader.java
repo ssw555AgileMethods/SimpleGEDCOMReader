@@ -36,12 +36,11 @@ public class FileReader {
 			DataValidation.divorceBeforeDeath(lp.getIndiList(),lp.getFamList());
 			DataValidation.noBigamy(lp.getFamList());
 			DataValidation.uniqueDataCheck(lp.getIndiList(),lp.getFamList());
-			
+			ListMembers.listOfDeceased(lp.getIndiList());
+			ListMembers.listLivingMarried(lp.getIndiList(),lp.getFamList());
 			GEDCOMPrinter printer = new GEDCOMPrinter();
 			printer.printIndividual(lp.getIndiList());
 			printer.printFamily(lp.getFamList());
-			printer.printLivingSingle(lp.getIndiList(), lp.getFamList());
-			printer.printMultipleBirth(lp.getIndiList(), lp.getFamList());
 			
 		} catch (Exception e) {
 			e.printStackTrace();

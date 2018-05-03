@@ -42,6 +42,7 @@ public class FileReader {
 			printer.printIndividual(lp.getIndiList());
 			printer.printFamily(lp.getFamList());
 			printer.printLivingSingle(lp.getIndiList(), lp.getFamList());
+			printer.printMultipleBirth(lp.getIndiList(), lp.getFamList());
 			
 		} catch (Exception e) {
 			e.printStackTrace();

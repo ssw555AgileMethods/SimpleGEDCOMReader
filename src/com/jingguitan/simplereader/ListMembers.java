@@ -11,7 +11,7 @@ public class ListMembers {
 		Collections.sort(arraylist);
 		System.out.println("List of individuals who are deceased:\n");
 		for(Individual indi:arraylist){
-			if(indi.getAlive()!="True"){
+			if(indi.getAlive()!=true){
 				System.out.println(indi.getName());
 			}
 		}
@@ -26,11 +26,11 @@ public class ListMembers {
 			for(Family fam:arraylist2){
 				if(fam.getDivorced()=="NA"){
 					for(Individual indi:arraylist1){
-						if(fam.getHusbandName()==indi.getName()&&indi.getAlive()=="True"){
+						if(fam.getHusbandName()==indi.getName()&&indi.getAlive()==true){
 							husb=fam.getHusbandName();
 							wife=fam.getWifeName();
 						}
-						if(wife==indi.getName()&&indi.getAlive()=="True"){
+						if(wife==indi.getName()&&indi.getAlive()==true){
 							wife=indi.getName();	
 							if(wife!=wife2){
 								System.out.println("Husband:"+husb+"\tWife:"+wife);	
